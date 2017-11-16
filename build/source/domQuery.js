@@ -1,6 +1,8 @@
 'use strict';
 
-var _dec, _desc, _value, _class;
+var _dec, _dec2, _desc, _value, _class;
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -33,66 +35,113 @@ function _applyDecoratedDescriptor(target, property, decorators, descriptor, con
   return desc;
 }
 
-var domQuery = (_dec = reqParam('selectorString'), (_class = function () {
+/*
+The options:
+.querySelector()
+.querySelectorAll()
+.getElementById() //SINGULAR
+.getElementsByClassName()
+.getElementsByTagName()
+*/
+var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorString'), (_class = function () {
   function domQuery() {
     _classCallCheck(this, domQuery);
   }
 
-  domQuery.prototype.one = function one(selectorString) {
+  //this is the only 
+
+
+  domQuery.find = function find(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
     var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
-    console.log(selectorStringHandler(selectorString));
+    //check for singular queries
+    if (limit == 1) this._selectorHandlerSingular(selectorString);else this._selectorHandler(selectorString);
   };
 
-  domQuery.prototype.selectorStringHandler = function selectorStringHandler(selectorString) {
-    //if(selectorString == null) return null;
+  //one is the same as domQuery.find where limit = 1
 
-    var stringStart = selectorString[0];
-    console.log(stringStart);
 
+  domQuery.one = function one(selectorString) {
+    var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+
+    this._selectorHandlerSingular(selectorString);
+  };
+
+  //Split the selection string handlers into two seperate functions to reduce the noise of the non-singular
+
+
+  domQuery._selectorHandlerSingular = function _selectorHandlerSingular(selectorString) {
+    //search for id's since there is a more performant option
+    var startsWithHash = selectorString.includes(/^[#]/);
+  };
+
+  //@reqParam('selectorString')
+
+
+  domQuery._selectorHandler = function _selectorHandler(selectorString) {
+    //search for classes and tagnames since there is a more performant option
+    var byClass = selectorString.match(/^[.]/);
+    byClass = selectorString.includes('[class=') || byClass;
+    var byTag = selectorString.match(/^ /);
+
+    var optimized = byClass ? 'class' : byTag ? 'tag' : 'generic';
     return {
-      elementType: '',
-      queryableProp: '',
-      propName: ''
+      methodCall: optimized,
+      selector: ''
     };
   };
 
-  // static one(elementType, selectorValue, parent = document, selectorType = 'id'){
-  //    const isById = selectorType == 'id';
+  //for singular queries that aren't specified by id
 
-  //    return isById ? parent.getElementById(selectorValue)
-  //                  : parent.querySelector(`${elementType}[${selectorType}="${selectorValue}"]`);
-  // }
-  // static oneLike(elementType,selectorValue, parent = document, selectorType = 'id'){
-  //    return parent.querySelector(`${elementType}[${selectorType}*="${selectorValue}"]`);
-  // }
-  // static all(elementType,selectorValue, parent = document, selectorType = 'id'){
-  //    const isByClass = selectorType == 'class';
 
-  //    return isByClass ? [...parent.getElementsByClassName(selectorValue)]
-  //                     : [...parent.querySelectorAll(`${elementType}[${selectorType}="${selectorValue}"]`)];
-  // }
-  // static allLike(elementType,selectorValue, parent = document, selectorType = 'id'){
-  //   return [...parent.querySelectorAll(`${elementType}[${selectorType}*="${selectorValue}"`)];
-  // }
-  // static component(elementType, parent = document){
-  //   return [...parent.getElementsByTagName(elementType)].shift();
-  // }
-  // static allComponent(elementType,parent=document){
-  //   return [...parent.getElementsByTagName(elementType)];
-  // }
+  domQuery._genericSingular = function _genericSingular(selectorString) {
+    var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
 
-  // static getData(element,name){
-  //   return element.getAttribute(`data-${name}`);
+    return parent.querySelector(selectorString);
+  };
 
-  // }
-  // static setData(element,name,value){
-  //   return element.setAttribute(`data-${name}`,value);
-  // }
+  //for #idName queries
+
+
+  domQuery._getById = function _getById(selectorString) {
+    var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+
+    return parent.getElementById(selectorString);
+  };
+
+  //this is the route to take when there aren't any qualified selectors e.g. .className or #idName
+
+
+  domQuery._generic = function _generic(selectorString) {
+    var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+    var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    return [].concat(_toConsumableArray(parent.querySelectorAll(selectorString)));
+  };
+
+  //when the user does a .className queries 
+
+
+  domQuery._getByClass = function _getByClass(selectorString) {
+    var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+    var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    return [].concat(_toConsumableArray(parent.getElementsByClassName(selectorString)));
+  };
+
+  //when the user passes in a string with no special characters
+
+
+  domQuery._getByTagName = function _getByTagName(selectorString) {
+    var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+    var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    return [].concat(_toConsumableArray(parent.getElementsByTagName(selectorString)));
+  };
 
   return domQuery;
-}(), (_applyDecoratedDescriptor(_class.prototype, 'selectorStringHandler', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'selectorStringHandler'), _class.prototype)), _class));
+}(), (_applyDecoratedDescriptor(_class, 'find', [_dec], Object.getOwnPropertyDescriptor(_class, 'find'), _class), _applyDecoratedDescriptor(_class, 'one', [_dec2], Object.getOwnPropertyDescriptor(_class, 'one'), _class)), _class));
 
 
 function reqParam(value) {
@@ -101,13 +150,10 @@ function reqParam(value) {
     if (typeof original == "function") {
       descriptor.value = function () {
         try {
-          console.log('args are');
-
           for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
           }
 
-          console.log(args);
           return args[value] != null ? original.apply(this, args) : null;
         } catch (e) {
           console.log(e);

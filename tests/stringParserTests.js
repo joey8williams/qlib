@@ -1,14 +1,20 @@
 const {assert} = chai;
-let query = new domQuery();
 describe('stringParser', function(){
   //Two choices: return null when empty or return everything. Returning everything is an immediate performance hit and could lead to the wrong element being modified
   it('returns null when empty',function(){
-    assert.equal(query.selectorStringHandler(null),null);
+    assert.equal(domQuery.find(null),null);
+    assert.equal(domQuery.one(null),null);
   });
 
+  it('prefers the class method call with . or class= present',function(){
+    const {methodCall} = domQuery._selectorHandler('.myTest');
+    assert.equal(methodCall,'class');
+  });
   //This is an immediate target to hunt for getElementById
   it('finds strings starting with special characters',function(){
     //periods
+    
+
 
     //hashes
 

@@ -15,21 +15,45 @@ class domQuery{
   @reqParam('selectorString')
   static find(selectorString,parent = document, limit = null){
     //check for singular queries
-    if(limit == 1) this._selectorHandlerSingular(selectorString);
+    if(limit == 1) return this.one(selectorString);
 
-    else this._selectorHandler(selectorString);
+    const {methodCall, selector} = this._selectorHandler(selectorString);
+
+    switch(methodCall){
+      case 'class': return this._getByClass(selector,parent,limit);
+
+      case 'tag': return this._getByTagName(selector,parent,limit);
+
+      case 'generic': return this._generic(selectorString,parent,null);
+
+      default: return null;
+    }
   }
 
   //one is the same as domQuery.find where limit = 1
   @reqParam('selectorString')
   static one(selectorString,parent = document){
-    this._selectorHandlerSingular(selectorString);
+    const {methodCall, selector} = this._selectorHandlerSingular(selectorString);
+    switch(methodCall){
+      case 'id': return this._getById(selector,parent);
+
+      case 'generic': return this._genericSingular(selectorString,parent);
+
+      default: return null;
+    }
   }
 
   //Split the selection string handlers into two seperate functions to reduce the noise of the non-singular
   static _selectorHandlerSingular(selectorString){
     //search for id's since there is a more performant option
-    const startsWithHash = selectorString.includes(/^[#]/);
+    let byId = selectorString.match(/^[#]/);
+    byId = selectorString.includes('[id=') || byId;
+
+    let optimized = byId ? 'id' : 'generic';
+    return {
+      methodCall: optimized,
+      selector: ''
+    }
 
   }
 
@@ -38,7 +62,7 @@ class domQuery{
     //search for classes and tagnames since there is a more performant option
     let byClass = selectorString.match(/^[.]/);
     byClass = selectorString.includes('[class=') || byClass;
-    const byTag = selectorString.match(/^ /)
+    const byTag = selectorString.match(/^[] /)
 
 
 

@@ -56,7 +56,25 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
     var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
     //check for singular queries
-    if (limit == 1) this._selectorHandlerSingular(selectorString);else this._selectorHandler(selectorString);
+    if (limit == 1) return this.one(selectorString);
+
+    var _selectorHandler2 = this._selectorHandler(selectorString),
+        methodCall = _selectorHandler2.methodCall,
+        selector = _selectorHandler2.selector;
+
+    switch (methodCall) {
+      case 'class':
+        return this._getByClass(selector, parent, limit);
+
+      case 'tag':
+        return this._getByTagName(selector, parent, limit);
+
+      case 'generic':
+        return this._generic(selectorString, parent, null);
+
+      default:
+        return null;
+    }
   };
 
   //one is the same as domQuery.find where limit = 1
@@ -65,7 +83,20 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   domQuery.one = function one(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
 
-    this._selectorHandlerSingular(selectorString);
+    var _selectorHandlerSingu = this._selectorHandlerSingular(selectorString),
+        methodCall = _selectorHandlerSingu.methodCall,
+        selector = _selectorHandlerSingu.selector;
+
+    switch (methodCall) {
+      case 'id':
+        return this._getById(selector, parent);
+
+      case 'generic':
+        return this._genericSingular(selectorString, parent);
+
+      default:
+        return null;
+    }
   };
 
   //Split the selection string handlers into two seperate functions to reduce the noise of the non-singular
@@ -73,7 +104,14 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
 
   domQuery._selectorHandlerSingular = function _selectorHandlerSingular(selectorString) {
     //search for id's since there is a more performant option
-    var startsWithHash = selectorString.includes(/^[#]/);
+    var byId = selectorString.match(/^[#]/);
+    byId = selectorString.includes('[id=') || byId;
+
+    var optimized = byId ? 'id' : 'generic';
+    return {
+      methodCall: optimized,
+      selector: ''
+    };
   };
 
   //@reqParam('selectorString')
@@ -83,7 +121,7 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
     //search for classes and tagnames since there is a more performant option
     var byClass = selectorString.match(/^[.]/);
     byClass = selectorString.includes('[class=') || byClass;
-    var byTag = selectorString.match(/^ /);
+    var byTag = selectorString.match(/^[] /);
 
     var optimized = byClass ? 'class' : byTag ? 'tag' : 'generic';
     return {

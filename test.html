@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mocha Tests</title>
+  <title>Query Buddy Tests</title>
   <link rel='stylesheet' href="node_modules/mocha/mocha.css">
 </head>
 <body>
@@ -13,7 +13,9 @@
   <script>mocha.setup('bdd')</script>
 
   <script src='build/source/domQuery.js'></script>
-  <script src='tests/stringParserTests.js'></script>
+
+  <script src='tests/selectorHandler.js'></script>
+  <script src='tests/selectorHandlerSingular.js'></script>
 
   <script>
     mocha.run();

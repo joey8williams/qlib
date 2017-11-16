@@ -1,0 +1,4 @@
+describe('QueryBuddy Tests',function(){
+    
+
+});

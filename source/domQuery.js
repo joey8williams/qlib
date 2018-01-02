@@ -62,7 +62,7 @@ export default class {
     //search for classes and tagnames since there is a more performant option
     let byClass = selectorString.match(/^[.]/);
     byClass = selectorString.includes('[class=') || byClass;
-    const byTag = selectorString.match(/^[] /)
+    const byTag = selectorString.match(/^[] /); //TODO: FIND A GOOD REGEX FOR THIS
 
 
 

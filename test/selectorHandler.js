@@ -26,9 +26,9 @@ describe('selectorHandler Tests', function(){
     const mk2 = domQuery._selectorHandler('input-class').methodCall;
     const mk3 = domQuery._selectorHandler('input.className').methodCall;
 
-    assert.equal(mk0,'class');
-    assert.equal(mk1,'class');
-    assert.equal(mk2,'class');
+    assert.equal(mk0,'tag');
+    assert.equal(mk1,'tag');
+    assert.equal(mk2,'tag');
     assert.equal(mk3,'generic');
   });
 

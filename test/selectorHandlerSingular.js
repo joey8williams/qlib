@@ -1,4 +1,6 @@
 var assert = require('chai').assert;
+import domQuery from '../source/domQuery.js';
+var dQ = new domQuery();
 describe('selectorHandlerSingular Tests',function(){
   //#region selectorHandlerSingular tests
   it('prefers id with # or [id= present',function(){

@@ -1,4 +1,7 @@
 var assert = require('chai').assert;
+import domQuery from '../source/domQuery.js';
+var dQ = new domQuery();
+
 describe('selectorHandler Tests', function(){
   //#region public method tests
   //Two choices: return null when empty or return everything. Returning everything is an immediate performance hit and could lead to the wrong element being modified

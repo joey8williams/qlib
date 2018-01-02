@@ -6,7 +6,7 @@ The options:
 .getElementsByClassName()
 .getElementsByTagName()
 */ 
-class domQuery{
+export default class {
   constructor(){
 
   }
@@ -123,4 +123,4 @@ function reqParam(value){
     }
 }
 
-module.exports.domQuery;
+//module.exports = new domQuery();

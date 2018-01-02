@@ -1,4 +1,89 @@
-'use strict';
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var domQuery = __webpack_require__(1).default;
+
+module.exports = domQuery;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _dec, _dec2, _desc, _value, _class;
 
@@ -43,15 +128,15 @@ The options:
 .getElementsByClassName()
 .getElementsByTagName()
 */
-var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorString'), (_class = function () {
-  function domQuery() {
-    _classCallCheck(this, domQuery);
+var _default = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorString'), (_class = function () {
+  function _default() {
+    _classCallCheck(this, _default);
   }
 
   //this is the only 
 
 
-  domQuery.find = function find(selectorString) {
+  _default.find = function find(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
     var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
@@ -80,7 +165,7 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   //one is the same as domQuery.find where limit = 1
 
 
-  domQuery.one = function one(selectorString) {
+  _default.one = function one(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
 
     var _selectorHandlerSingu = this._selectorHandlerSingular(selectorString),
@@ -102,7 +187,7 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   //Split the selection string handlers into two seperate functions to reduce the noise of the non-singular
 
 
-  domQuery._selectorHandlerSingular = function _selectorHandlerSingular(selectorString) {
+  _default._selectorHandlerSingular = function _selectorHandlerSingular(selectorString) {
     //search for id's since there is a more performant option
     var byId = selectorString.match(/^[#]/);
     byId = selectorString.includes('[id=') || byId;
@@ -117,7 +202,7 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   //@reqParam('selectorString')
 
 
-  domQuery._selectorHandler = function _selectorHandler(selectorString) {
+  _default._selectorHandler = function _selectorHandler(selectorString) {
     //search for classes and tagnames since there is a more performant option
     var byClass = selectorString.match(/^[.]/);
     byClass = selectorString.includes('[class=') || byClass;
@@ -133,7 +218,7 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   //for singular queries that aren't specified by id
 
 
-  domQuery._genericSingular = function _genericSingular(selectorString) {
+  _default._genericSingular = function _genericSingular(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
 
     return parent.querySelector(selectorString);
@@ -142,7 +227,7 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   //for #idName queries
 
 
-  domQuery._getById = function _getById(selectorString) {
+  _default._getById = function _getById(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
 
     return parent.getElementById(selectorString);
@@ -151,7 +236,7 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   //this is the route to take when there aren't any qualified selectors e.g. .className or #idName
 
 
-  domQuery._generic = function _generic(selectorString) {
+  _default._generic = function _generic(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
     var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
@@ -161,7 +246,7 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   //when the user does a .className queries 
 
 
-  domQuery._getByClass = function _getByClass(selectorString) {
+  _default._getByClass = function _getByClass(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
     var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
@@ -171,15 +256,17 @@ var domQuery = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
   //when the user passes in a string with no special characters
 
 
-  domQuery._getByTagName = function _getByTagName(selectorString) {
+  _default._getByTagName = function _getByTagName(selectorString) {
     var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
     var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
     return [].concat(_toConsumableArray(parent.getElementsByTagName(selectorString)));
   };
 
-  return domQuery;
+  return _default;
 }(), (_applyDecoratedDescriptor(_class, 'find', [_dec], Object.getOwnPropertyDescriptor(_class, 'find'), _class), _applyDecoratedDescriptor(_class, 'one', [_dec2], Object.getOwnPropertyDescriptor(_class, 'one'), _class)), _class));
+
+exports.default = _default;
 
 
 function reqParam(value) {
@@ -203,4 +290,7 @@ function reqParam(value) {
   };
 }
 
-module.exports.domQuery;
+//module.exports = new domQuery();
+
+/***/ })
+/******/ ]);

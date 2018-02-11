@@ -29,6 +29,52 @@ describe('selectorHandlerSingular Tests',function(){
 
   });
 
+
+  //dashes must be included to follow the HTML spec. 
+  it('prefers the tag name call when there is a single word',function(){
+    const _0 = domQuery._selectorHandlerSingular('input').methodCall;
+    const _1 = domQuery._selectorHandlerSingular('inp3wut').methodCall;
+    const _2 = domQuery._selectorHandlerSingular('input-class').methodCall;
+
+    assert.equal(_0,'tag');
+    assert.equal(_1,'tag');
+    assert.equal(_2,'tag');
+  });
+
+  it('prefers generic when a tag name and any attribute is specified',function(){
+    const _0 = domQuery._selectorHandlerSingular('input#className').methodCall;
+
+    assert.equal(_0,'generic');
+  });
+
+  it('prefers generic when any non-id attribute is specified',function(){
+    const _0  = domQuery._selectorHandlerSingular('[data-single="test"]').methodCall;
+    const _1 = domQuery._selectorHandlerSingular('input[data-name="test"]').methodCall;
+    const _2 = domQuery._selectorHandlerSingular('input.test').methodCall;
+
+    assert.equal(_0,'generic');
+    assert.equal(_1,'generic');
+    assert.equal(_2,'generic');
+  });
+
+  it('prefers generic when using nested CSS queries (e.g. row > div.className)',function(){
+    const _0 = domQuery._selectorHandlerSingular('div > button').methodCall;
+    const _1 = domQuery._selectorHandlerSingular('div button').methodCall;
+    const _2 = domQuery._selectorHandlerSingular('div :not(button)').methodCall;
+    const _3 = domQuery._selectorHandlerSingular('div.className input').methodCall;
+    const _4 = domQuery._selectorHandlerSingular('div input.item').methodCall;
+
+    assert.equal(_0,'generic');
+    assert.equal(_1,'generic');
+    assert.equal(_2,'generic');
+    assert.equal(_3,'generic');
+    assert.equal(_4,'generic');
+  });
+
+  it('finds ids from a valid selector string', function(){
+    throw new Error('Not Implemented');
+  });
+ 
   //#endregion
 
 });

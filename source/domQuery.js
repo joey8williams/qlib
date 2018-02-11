@@ -49,10 +49,12 @@ export default class {
     let byId = selectorString.match(/^[#]/);
     byId = selectorString.includes('[id=') || byId;
 
-    let optimized = byId ? 'id' : 'generic';
+    const method = byId ? 'id' : 'generic';
+    const selector = this._selectorParser(selectorString,method);
+
     return {
-      methodCall: optimized,
-      selector: ''
+      methodCall: method,
+      selector: selector 
     }
 
   }
@@ -62,16 +64,55 @@ export default class {
     //search for classes and tagnames since there is a more performant option
     let byClass = selectorString.match(/^[.]/);
     byClass = selectorString.includes('[class=') || byClass;
-    const byTag = selectorString.match(/^[] /); //TODO: FIND A GOOD REGEX FOR THIS
+    //make sure the string has words, and nothing but words, hyphens are allowed because they don't violate html
+    const byTag = selectorString.match(/\w/) && !selectorString.match(/[.#[\]> :()]/); //TODO: FIND A GOOD REGEX FOR THIS
 
 
 
-    const optimized = byClass ? 'class' : byTag ? 'tag' : 'generic';
+    const method = byClass ? 'class' : byTag ? 'tag' : 'generic';
+    const selector = this._selectorParser(selectorString,method);
     return {
-      methodCall: optimized,
-      selector: '',
+      methodCall: method,
+      selector: selector,
     }
   }
+
+  static _selectorParser(selectorString,method){
+    const parseSelector = (item,methodName) => {
+
+      const getContents = (fullContents, boundaryCharacter) => {
+        const rexexp = `${boundaryCharacter}(.*?)${boundaryCharacter}`;
+        const re = new RegExp(rexexp);
+        return fullContents.match(re)[1];
+      }
+      
+      const shortHandCharacter = methodName == 'class' ? '.' : '#'; //Only get by class and id will call this function
+
+      if(item.includes(shortHandCharacter)) return item.split(shortHandCharacter)[1]; //return the className that occurs after the period.
+
+      else if(item.match(/[[\]]/)){
+        if(item.match(/[']/)) return getContents(item,"'");
+        
+        else if(selectorString.match(/["]/)) return getContents(item,'"');
+        
+        else throw new Error('Improper formatted selectorString');
+      }
+      else throw new Error('Improper formatted selectorString');
+
+    }
+
+
+
+    switch(method){
+      case 'class': return parseSelector(selectorString,method);
+      case 'id': return parseSelector(selectorString,method);
+      default: return selectorString; //If its by tagname, there is nothing else in the string with the tag name
+    }
+
+
+
+  }
+
 
   //for singular queries that aren't specified by id
   static _genericSingular(selectorString, parent = document){

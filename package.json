@@ -4,7 +4,7 @@
   "description": "a query language for DOM manipulation",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require babel-core/register -R nyan",
+    "test": "clear && mocha --require babel-core/register -R nyan",
     "pack": "webpack --config webpack.config.js"
   },
   "author": "JsonBourne",

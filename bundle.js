@@ -206,7 +206,8 @@ var _default = (_dec = reqParam('selectorString'), _dec2 = reqParam('selectorStr
     //search for classes and tagnames since there is a more performant option
     var byClass = selectorString.match(/^[.]/);
     byClass = selectorString.includes('[class=') || byClass;
-    var byTag = selectorString.match(/^[] /);
+    var byTag = selectorString.match(/^[] /); //TODO: FIND A GOOD REGEX FOR THIS
+
 
     var optimized = byClass ? 'class' : byTag ? 'tag' : 'generic';
     return {

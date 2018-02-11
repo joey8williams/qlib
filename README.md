@@ -4,6 +4,21 @@ a generic library for gathering DOM elements
 
 This library aims to be a modest sizzle engine, as light weight as possible while still providing minor performance gains when querying the DOM manually.
 
+## Usage
+1. Install qlib to your project's web directory.
+    -via npm: _npm install querybuddy_
+2. Import query and queryOne to the files that need to query the DOM
+    -ES6 Import Syntax: _import {query, queryOne} from 'querybuddy';_
+    -Require Syntax a: _const query = require('querybuddy').query_
+    -Require Syntax b: _const queryOne = require('querybuddy').queryOne_
+3. Query the DOM similar to document.query### or jQuery's $(selector)
+
+### Parameters:
+#### query:
+query(selectorString,parent,limit)
+1. selectorString: your CSS compliant selector string. Any valid selector will work
+2. parent: a parent element to query within. Defaults to document if parent is not specified.
+3. limit: an integer value representing the number of results to return. If no limit is specified, all results will be returned. If n limit is specified, the first n results will be returned. If n=1 limit is specified, queryOne will be called.
 
 
 
@@ -20,8 +35,10 @@ This library aims to be a modest sizzle engine, as light weight as possible whil
 ### Bundling
 1. npm run-script pack
   -This project uses webpack for bundling.
-  
-### TODO:
-1. Remove the class declaration in favor of two main entry points (query, queryOne)
-2. Once 1 is done - Refactor the unit tests to leverage query and queryOne instead of hitting functions that are no longer exported
 
+
+###Todo:
+1. Learn more about Live Lists and maybe incorporate a queryLive function in the future?
+
+
+#Thanks!  

@@ -47,7 +47,8 @@ export default class {
   static _selectorHandlerSingular(selectorString){
     //search for id's since there is a more performant option
     let byId = selectorString.match(/^[#]/);
-    byId = selectorString.includes('[id=') || byId;
+    byId = (selectorString.match(/^[[]/) && selectorString.includes('[id=')) || byId;
+    byId = byId && !selectorString.match(/[ .>:()]/);
 
     const method = byId ? 'id' : 'generic';
     const selector = this._selectorParser(selectorString,method);
@@ -78,6 +79,7 @@ export default class {
   }
 
   static _selectorParser(selectorString,method){
+    const errorMessage = 'Improper formatted selectorString';
     const parseSelector = (item,methodName) => {
 
       const getContents = (fullContents, boundaryCharacter) => {
@@ -88,20 +90,28 @@ export default class {
       
       const shortHandCharacter = methodName == 'class' ? '.' : '#'; //Only get by class and id will call this function
 
-      if(item.includes(shortHandCharacter)) return item.split(shortHandCharacter)[1]; //return the className that occurs after the period.
+      if(item.includes(shortHandCharacter)){
+        const arr = item.split(shortHandCharacter); //return the className that occurs after the period.
+
+        if(arr[1].trim().length > 1) return arr[1];
+
+        else throw new Error(errorMessage)
+      } 
 
       else if(item.match(/[[\]]/)){
         if(item.match(/[']/)) return getContents(item,"'");
         
         else if(selectorString.match(/["]/)) return getContents(item,'"');
         
-        else throw new Error('Improper formatted selectorString');
+        else throw new Error(errorMessage);
       }
-      else throw new Error('Improper formatted selectorString');
+      else throw new Error(errorMessage);
 
     }
 
 
+    const endsWithSpecialCharacter = selectorString.match(/$[.#]/);
+    if(endsWithSpecialCharacter) throw new Error(errorMessage);
 
     switch(method){
       case 'class': return parseSelector(selectorString,method);

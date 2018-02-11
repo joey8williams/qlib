@@ -61,34 +61,4 @@ describe('selectorHandler Tests', function(){
   });
   //#endregion
 
-  it('finds classNames from a valid selector string',function(){
-    throw new Error('Not Implemented');
-
-  });
-
-  it('finds ids from a valid selector string', function(){
-    throw new Error('Not Implemented');
-
-  });
-  it('returns the given selector string if the method is not class or id',function(){
-    throw new Error('Not Implemented');
-
-  });
-
-
-  it('throws an error when the selector string is not formatted correctly',function(){
-    const _0 = () => domQuery._selectorParser('input[class=babnana]','class');
-    const _1 = () => domQuery._selectorParser('input[id=babnana]','id');
-    
-    assert.throws(_0,Error,'Improper formatted selectorString');
-    assert.throws(_1,Error,'Improper formatted selectorString');
-  });
-
-
- 
-
-  //Should throw an error, the input must contain a selector value if there is a selector type
-  it('finds strings ending in period or hash',function(){
-    throw new Error('Not Implemented');
-  });
 });

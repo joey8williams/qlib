@@ -6,11 +6,11 @@ This library aims to be a modest sizzle engine, as light weight as possible whil
 
 ## Usage
 1. Install qlib to your project's web directory.
-    -via npm: _npm install querybuddy_
+    * via npm: _npm install querybuddy_
 2. Import query and queryOne to the files that need to query the DOM
-    -ES6 Import Syntax: _import {query, queryOne} from 'querybuddy';_
-    -Require Syntax a: _const query = require('querybuddy').query_
-    -Require Syntax b: _const queryOne = require('querybuddy').queryOne_
+    * ES6 Import Syntax: `import {query, queryOne} from 'querybuddy';`
+    * Require Syntax a: `const query = require('querybuddy').query;`
+    * Require Syntax b: `const queryOne = require('querybuddy').queryOne;`
 3. Query the DOM similar to document.query### or jQuery's $(selector)
 
 ### Parameters:
@@ -37,7 +37,7 @@ queryOne(selectorString,parent)
 
 ### Bundling
 1. npm run-script pack
-  -This project uses webpack for bundling.
+  * This project uses webpack for bundling.
 
 
 ###Todo:

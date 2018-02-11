@@ -40,8 +40,8 @@ queryOne(selectorString,parent)
   * This project uses webpack for bundling.
 
 
-###Todo:
+### Todo:
 1. Learn more about Live Lists and maybe incorporate a queryLive function in the future?
 
 
-#Thanks!  
+# Thanks!  

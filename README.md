@@ -1,4 +1,4 @@
-# querybuddy
+# qlib
 a generic library for gathering DOM elements
 
 

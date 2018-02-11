@@ -1,12 +1,11 @@
 var assert = require('chai').assert;
-import domQuery from '../source/domQuery.js';
-var dQ = new domQuery();
+import {_selectorParser} from '../source/domQuery.js';
 
 describe('selectorParse Tests', function(){
   it('finds classNames from a valid selector string',function(){
     const answer = 'className';
-    const _0 = domQuery._selectorHandler(`.${answer}`).selector;
-    const _1 = domQuery._selectorHandler(`[class="${answer}"]`).selector;
+    const _0 = _selectorParser(`.${answer}`,'class');
+    const _1 = _selectorParser(`[class="${answer}"]`,'class');
 
     assert.equal(_0,answer);
     assert.equal(_1,answer);
@@ -15,8 +14,8 @@ describe('selectorParse Tests', function(){
 
   it('finds ids from a valid selector string', function(){
     const answer = 'className';
-    const _0 = domQuery._selectorHandlerSingular(`#${answer}`).selector;
-    const _1 = domQuery._selectorHandlerSingular(`[id="${answer}"]`).selector;
+    const _0 = _selectorParser(`#${answer}`,'id');
+    const _1 = _selectorParser(`[id="${answer}"]`,'id');
 
     assert.equal(_0,answer);
     assert.equal(_1,answer);
@@ -30,14 +29,14 @@ describe('selectorParse Tests', function(){
     const _2a = 'input#className';
 
 
-    const _0 = domQuery._selectorParser(_0a,'tag');
-    const _1 = domQuery._selectorParser(_0a,'generic');
+    const _0 = _selectorParser(_0a,'tag');
+    const _1 = _selectorParser(_0a,'generic');
 
-    const _2 = domQuery._selectorParser(_1a,'tag');
-    const _3 = domQuery._selectorParser(_1a,'generic');
+    const _2 = _selectorParser(_1a,'tag');
+    const _3 = _selectorParser(_1a,'generic');
 
-    const _4 = domQuery._selectorParser(_2a,'tag');
-    const _5 = domQuery._selectorParser(_2a,'generic');
+    const _4 = _selectorParser(_2a,'tag');
+    const _5 = _selectorParser(_2a,'generic');
 
     assert.equal(_0,_0a);
     assert.equal(_1,_0a);
@@ -53,8 +52,8 @@ describe('selectorParse Tests', function(){
 
 
   it('throws an error when the selector string is not formatted correctly',function(){
-    const _0 = () => domQuery._selectorParser('input[class=babnana]','class');
-    const _1 = () => domQuery._selectorParser('[id=babnana]','id');
+    const _0 = () => _selectorParser('input[class=babnana]','class');
+    const _1 = () => _selectorParser('[id=babnana]','id');
     
     assert.throws(_0,Error,'Improper formatted selectorString');
     assert.throws(_1,Error,'Improper formatted selectorString');
@@ -65,8 +64,8 @@ describe('selectorParse Tests', function(){
 
   //Should throw an error, the input must contain a selector value if there is a selector type
   it('finds strings ending in period or hash',function(){
-    const _0 = () => domQuery._selectorParser('input.','class');
-    const _1 = () => domQuery._selectorParser('input#','id');
+    const _0 = () => _selectorParser('input.','class');
+    const _1 = () => _selectorParser('input#','id');
 
     assert.throws(_0,Error,'Improper formatted selectorString');
     assert.throws(_1,Error,'Improper formatted selectorString');

@@ -13,7 +13,7 @@ export default class {
 
   //this is the only 
   @reqParam('selectorString')
-  static find(selectorString,parent = document, limit = null){
+  static query(selectorString,parent = document, limit = null){
     //check for singular queries
     if(limit == 1) return this.one(selectorString);
 
@@ -32,7 +32,7 @@ export default class {
 
   //one is the same as domQuery.find where limit = 1
   @reqParam('selectorString')
-  static one(selectorString,parent = document){
+  static queryOne(selectorString,parent = document){
     const {methodCall, selector} = this._selectorHandlerSingular(selectorString);
     switch(methodCall){
       case 'id': return this._getById(selector,parent);

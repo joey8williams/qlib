@@ -11,9 +11,11 @@ module.exports.query = query;
 module.exports.queryOne = queryOne;
 
 //Testing purposes only
-module.exports._selectorHandler = _selectorHandler;
-module.exports._selectorHandlerSingular = _selectorHandlerSingular;
-module.exports._selectorParser = _selectorParser;
+if(process.env.NODE_ENV === "test"){
+  module.exports._selectorHandler = _selectorHandler;
+  module.exports._selectorHandlerSingular = _selectorHandlerSingular;
+  module.exports._selectorParser = _selectorParser;
+}
 
 
 //@reqParam('selectorString')

@@ -4,8 +4,8 @@
   "description": "a query language for DOM manipulation",
   "main": "index.js",
   "scripts": {
-    "test": "clear && mocha --require babel-core/register -R nyan",
-    "pack": "webpack --config webpack.config.js"
+    "test": "export NODE_ENV=test && clear && mocha --require babel-core/register -R list",
+    "pack": "export NODE_ENV=prod && webpack --config webpack.config.js"
   },
   "author": "JsonBourne",
   "license": "ISC",

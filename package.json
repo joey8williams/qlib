@@ -1,6 +1,6 @@
 {
   "name": "querybuddy",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "a query language for DOM manipulation",
   "main": "index.js",
   "scripts": {

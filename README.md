@@ -20,7 +20,7 @@ query(selectorString,parent,limit)
 2. parent: a parent element to query within. Defaults to document if parent is not specified.
 3. limit: an integer value representing the number of results to return. If no limit is specified, all results will be returned. If n limit is specified, the first n results will be returned. If n=1 limit is specified, queryOne will be called.
 
-###queryOne:
+### queryOne:
 queryOne(selectorString,parent)
 1. selectorString: your CSS compliant selector string. Any valid selector will work
 2. parent: a parent element to query within. Defaults to document if parent is not specified.

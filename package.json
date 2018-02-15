@@ -1,7 +1,7 @@
 {
-  "name": "querybuddy",
-  "version": "2.0.3",
-  "description": "a query language for DOM manipulation",
+  "name": "qlib",
+  "version": "0.1.0",
+  "description": "An unopinionated library for gathering DOM elements",
   "main": "index.js",
   "scripts": {
     "test": "export NODE_ENV=test && clear && mocha --require babel-core/register -R list",
